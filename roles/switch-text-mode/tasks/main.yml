@@ -1,0 +1,10 @@
+---
+- name: Config | Setup only boot in text mode
+  shell:
+    cmd: systemctl set-default multi-user.target
+
+#- name: Config | Setup only boot in text mode
+#  systemd:
+#    default_set: multi-user.target
+#    default_apply: yes
+

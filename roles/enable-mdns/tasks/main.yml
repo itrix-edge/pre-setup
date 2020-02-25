@@ -1,0 +1,13 @@
+---
+- name: Config | Install avahi-daemon
+  package:
+    name: avahi-daemon
+    state: present
+
+- name: Config | Enable avahi-daemon on node start
+  systemd:
+    name: avahi-daemon
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

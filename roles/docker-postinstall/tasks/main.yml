@@ -1,0 +1,38 @@
+---
+- name: Config | Get current username
+  command: whoami
+  changed_when: false
+  become: false
+  register: whoami
+
+- name: Config | Set login_user with current user with username
+  set_fact:
+    login_user: "{{ whoami.stdout }}"
+
+- name: Config | Add docker group
+  group:
+    name: docker
+    state: present
+
+- name: Config | Assign current user as docker group
+  user:
+    name: "{{ login_user }}"
+    groups: docker
+    append: true
+    state: present
+
+- name: Config | Make container storage path
+  file:
+    name: /mnt/nvme/docker
+    state: directory
+
+- name: Config | Update dockerd configuration
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Control | Restart docker daemon
+  systemd:
+    name: docker
+    state: restarted
+

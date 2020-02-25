@@ -1,0 +1,10 @@
+---
+
+- name: playbook
+  hosts: all
+  become: yes
+  roles:
+    - { role: switch-text-mode, tags: text_mode } 
+    - { role: enable-mdns, tags: enable_mdns }
+    - { role: init-nvme, tags: init_nvme }
+    - { role: docker-postinstall, tags: docker_postinstall }

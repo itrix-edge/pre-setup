@@ -1,0 +1,27 @@
+---
+- name: Config | Install parted
+  package:
+    name: parted
+    state: present
+
+- name: Config | Initialize NVMe partition with GPT Table
+  raw: parted -a optimal -s /dev/nvme0n1 mklabel gpt
+
+- name: Config | Create NVMe primaty partition
+  raw: parted -a optimal -s /dev/nvme0n1 unit '%' mkpart primary ext4 0 100
+
+- name: Config | Format NVMe primary partition
+  raw: mkfs.ext4 -F /dev/nvme0n1p1
+
+- name: Config | Make mount point `/mnt/nvme`
+  file:
+    path: /mnt/nvme
+    state: directory
+
+- name: Config | Update /etc/fstab 
+  copy:
+    src: fstab
+    dest: /etc/fstab
+
+- name: Config | Mount partition by given /etc/fstab
+  raw: mount -a

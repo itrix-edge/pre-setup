@@ -1,7 +1,7 @@
 ---
 
 - name: playbook
-  hosts: all
+  hosts: CP
   become: yes
   roles:
     - { role: switch-text-mode, tags: text_mode } 

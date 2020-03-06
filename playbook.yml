@@ -8,3 +8,4 @@
     - { role: enable-mdns, tags: enable_mdns }
     - { role: init-nvme, tags: init_nvme }
     - { role: docker-postinstall, tags: docker_postinstall }
+    - { role: kubernetes-presetup, tags: kubernetes_presetup }

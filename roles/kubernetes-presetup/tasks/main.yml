@@ -1,0 +1,20 @@
+---
+- name: Install | Add jetson-clocks.service
+  copy:
+    src: jetson-clocks.service
+    dest: /lib/systemd/system/
+    mode: 0644
+
+- name: Config | Config systemd enable jetson-clocks.service
+  systemd:
+    name: jetson-clocks.service
+    enable: yes
+    state: started
+    daemon_reload: yes
+
+- name: Config | Disable zram config
+  systemd:
+    name: nvzramconfig.service
+    enable: no
+    state: stopped
+    

@@ -1,7 +1,7 @@
 ---
 - name: Install | Add jetson-clocks.conf
   copy:
-    src: jetson-clocks.conf
+    src: jetson_clocks.conf
     dest: /etc/
     mode: 0644
 

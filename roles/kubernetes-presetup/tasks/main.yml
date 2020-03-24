@@ -1,4 +1,10 @@
 ---
+- name: Install | Add jetson-clocks.conf
+  copy:
+    src: jetson-clocks.conf
+    dest: /etc/
+    mode: 0644
+
 - name: Install | Add jetson-clocks.service
   copy:
     src: jetson-clocks.service
@@ -17,4 +23,3 @@
     name: nvzramconfig.service
     enabled: no
     state: stopped
-    

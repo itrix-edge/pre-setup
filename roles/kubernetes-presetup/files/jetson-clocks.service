@@ -1,12 +1,12 @@
 [Unit]
-Description=Maximize Jetson Performance
+Description=Reset Jetson with Maximize Performance but slower Fan Speed
 Requires=nv.service
 After=nv.service
 
 [Service]
 Restart=on-failure
 RestartSec=10
-ExecStart=/usr/bin/jetson_clocks
+ExecStart=/usr/bin/jetson_clocks --restore /etc/jetson_clocks.conf
 
 [Install]
 WantedBy=multi-user.target

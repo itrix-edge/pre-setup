@@ -1,0 +1,6 @@
+---
+# Define CNI plugin download url so compute board can install CNI plugin before CNI work.
+
+cni_plugin_version: "v0.8.5"
+cni_plugin_arch: "arm64"
+cni_plugin_url: "https://github.com/containernetworking/plugins/releases/download/{{ cni_plugin_version }}/cni-plugins-linux-{{ cni_plugin_arch }}-{{ cni_plugin_version }}.tgz"

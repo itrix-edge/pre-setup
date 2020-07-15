@@ -25,6 +25,13 @@
     state: stopped
   ignore_errors: yes
 
+- name: Config | Disable zram config
+  systemd:
+    name: zram-config.service
+    enabled: no
+    state: stopped
+  ignore_errors: yes
+
 - name: CNI | make sure /opt/cni/bin exists
   file:
     path: /opt/cni/bin

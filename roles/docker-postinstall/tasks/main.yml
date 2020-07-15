@@ -44,6 +44,11 @@
     dest: /etc/docker/daemon.json
   when: nvmemount.stat.exists == False
 
+- name: Config | Create systemd cgroup folder
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
 - name: Control | Restart docker daemon
   systemd:
     name: docker

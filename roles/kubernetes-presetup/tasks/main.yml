@@ -23,6 +23,7 @@
     name: nvzramconfig.service
     enabled: no
     state: stopped
+  ignore_errors: yes
 
 - name: CNI | make sure /opt/cni/bin exists
   file:

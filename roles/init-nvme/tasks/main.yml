@@ -1,27 +1,49 @@
 ---
+
+- name: Check | Check for nvme availability
+  stat:
+    path: /dev/nvme0n1
+  register: nvmedev
+
+- name: Check | Check for nvme mountpoint exist
+  stat:
+    path: /mnt/nvme
+  register: nvmemount
+
 - name: Config | Install parted
   package:
     name: parted
     state: present
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
 - name: Config | Initialize NVMe partition with GPT Table
   raw: parted -a optimal -s /dev/nvme0n1 mklabel gpt
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
 - name: Config | Create NVMe primaty partition
   raw: parted -a optimal -s /dev/nvme0n1 unit '%' mkpart primary ext4 0 100
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
 - name: Config | Format NVMe primary partition
   raw: mkfs.ext4 -F /dev/nvme0n1p1
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
 - name: Config | Make mount point `/mnt/nvme`
   file:
     path: /mnt/nvme
     state: directory
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
-- name: Config | Update /etc/fstab 
+- name: Config | Update /etc/fstab
   copy:
     src: fstab
     dest: /etc/fstab
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False
 
 - name: Config | Mount partition by given /etc/fstab
-  raw: mount -a
+  mount:
+    path: /mnt/nvme
+    src: /dev/nvme0n1
+    fstype: ext4
+    state: present
+  when: nvmedev.stat.exists == True and nvmemount.stat.exists == False

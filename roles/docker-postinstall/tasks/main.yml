@@ -21,15 +21,28 @@
     append: true
     state: present
 
+- name: Check | Check for nvme mountpoint exist
+  stat:
+    path: /mnt/nvme
+  register: nvmemount
+
 - name: Config | Make container storage path
   file:
     name: /mnt/nvme/docker
     state: directory
+  when: nvmemount.stat.exists == True
 
 - name: Config | Update dockerd configuration
   copy:
     src: daemon.json
     dest: /etc/docker/daemon.json
+  when: nvmemount.stat.exists == True
+
+- name: Config | Update dockerd configuration
+  copy:
+    src: daemon_without_dataroot.json
+    dest: /etc/docker/daemon.json
+  when: nvmemount.stat.exists == False
 
 - name: Control | Restart docker daemon
   systemd:

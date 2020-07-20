@@ -21,6 +21,9 @@ Change L4T hardware settings for kubernetes installation requirement.
 ### siwtch-text-mode
 Change compute node running on text mode as default.
 
+### update-kernel
+Update machine kernel if update file `update-image.tbz2` exists on project root directory.
+
 ## How to use
 
 pre-setup is an ansible project, run it with ansible playbook works.

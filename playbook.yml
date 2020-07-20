@@ -4,6 +4,7 @@
   hosts: CP
   become: yes
   roles:
+    - { role: update-kernel, tags: update_kernel } 
     - { role: switch-text-mode, tags: text_mode } 
     - { role: enable-mdns, tags: enable_mdns }
     - { role: init-nvme, tags: init_nvme }

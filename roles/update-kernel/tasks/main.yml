@@ -1,0 +1,32 @@
+---
+
+- name: Config | Check if kernel update binary "update-image.tbz2" exists
+  local_action: stat path='{{CWD}}/update-image.tbz2'
+  register: kernel_update_image
+
+- name: Copy | Copy kernel image binary to target machine
+  copy:
+    src: '{{CWD}}/update-image.tbz2'
+    dest: /tmp
+  when: kernel_update_image.stat.exists == True
+
+- name: Extract | Unarchive kernel image binary
+  unarchive:
+    src: /tmp/update-image.tbz2
+    dest: /tmp
+    remote_src: yes
+  when: kernel_update_image.stat.exists == True
+
+- name: Copy | Apply kernel modules
+  copy:
+    src: /tmp/modules
+    dest: /lib/
+    remote_src: yes
+  when: kernel_update_image.stat.exists == True
+
+- name: Copy | Apply kernel Image
+  copy:
+    src: /tmp/Image
+    dest: /boot/Image
+    remote_src: yes
+  when: kernel_update_image.stat.exists == True

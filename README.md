@@ -31,7 +31,7 @@ To manage nodes with ansible, all clinets should setup SSH key login access with
 2. Run ansible playbook to start the deployment:
 
    ```=shell
-    $ ansible-playbook -i inventory
+    $ ansible-playbook -i inventory playbook.yml
    ```
 ### Update kernel
 

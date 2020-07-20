@@ -18,10 +18,7 @@
   when: kernel_update_image.stat.exists == True
 
 - name: Copy | Apply kernel modules
-  copy:
-    src: /tmp/modules
-    dest: /lib/
-    remote_src: yes
+  raw: cp -r /tmp/modules /lib/
   when: kernel_update_image.stat.exists == True
 
 - name: Copy | Apply kernel Image
